@@ -12,7 +12,7 @@ make_color_video 00FF00 720
 make_color_video 0000FF 360
 
 
-ffmpeg -y -f lavfi -i nullsrc -filter_complex "color=white[s];[s]fps=30[r];[r]drawtext=fontfile=FreeSans.ttf: text='Frame=%{frame_num}': x=20: y=20: fontcolor=black: fontsize=32: box=1: boxcolor=white: boxborderw=10" -frames:v 1000 -c:v libx264 -preset fast -g 25 -movflags faststart+frag_keyframe+empty_moov+default_base_moof -tune fastdecode count.mp4
+ffmpeg -y -f lavfi -i nullsrc -filter_complex "color=white:s=720x720[s];[s]fps=30[r];[r]drawtext=fontfile=FreeSans.ttf: text='Frame=%{frame_num}': x=20: y=20: fontcolor=black: fontsize=32: box=1: boxcolor=white: boxborderw=10" -frames:v 1000 -c:v libx264 -preset fast -g 25 -movflags faststart+frag_keyframe+empty_moov+default_base_moof -tune fastdecode count.mp4
 python3 -m tator.transcode.make_fragment_info -o count.json count.mp4
 
 ffmpeg -y -i count.mp4 -vf scale=-2:360 -c:v libx264 -preset fast -g 25 -movflags faststart+frag_keyframe+empty_moov+default_base_moof -tune fastdecode count_360.mp4
